@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EntreTelas · Intercambio textil en Concepción</title>
+    <meta name="description" content="Publica ropa y retazos en desuso y encuentra quién los reutiliza o repara en tu comuna.">
+    <link rel="stylesheet" href="css/entretelas.css">
+</head>
+<body>
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+
+<header class="et-header">
+    <div class="et-header__inner">
+        <a class="et-brand" href="#inicio" aria-label="EntreTelas, inicio">
+            <svg viewBox="0 0 40 40" aria-hidden="true"><rect x="3" y="3" width="34" height="34" rx="9" fill="#E9A23B"/><path d="M10 14h20M10 20h20M10 26h20M14 10v20M20 10v20M26 10v20" stroke="#1E3A2F" stroke-width="2.4" stroke-linecap="round" opacity=".85"/></svg>
+            <span><strong>EntreTelas</strong><small>Intercambio textil · Concepción</small></span>
+        </a>
+        <nav class="et-nav" aria-label="Secciones">
+            <a href="#inicio" data-ruta="inicio">Inicio</a>
+            <a href="#explorar" data-ruta="explorar">Explorar</a>
+            <a href="#publicar" data-ruta="publicar">Publicar</a>
+            <a href="#seguimiento" data-ruta="seguimiento">Seguimiento <span class="et-contador" id="contador" hidden></span></a>
+        </nav>
+        <div class="et-actions">
+            <a class="et-boton et-boton--claro" href="#publicar">Publicar textil</a>
+        </div>
+    </div>
+</header>
+
+<main id="contenido" tabindex="-1">
+
+    <!-- Inicio -->
+    <section class="vista" id="vista-inicio" data-vista="inicio">
+        <div class="hero">
+            <div class="hero__texto">
+                <p class="eyebrow">Economía circular local</p>
+                <h1>Dale otra vuelta a la ropa que ya no usas</h1>
+                <p class="hero__bajada">Publica prendas y retazos en desuso y conéctate con personas de tu comuna que los pueden reutilizar o reparar. Sabes el estado del textil antes de ir y sigues cada solicitud hasta la entrega.</p>
+                <div class="hero__acciones">
+                    <a class="et-boton" href="#explorar">Explorar textiles</a>
+                    <a class="et-boton et-boton--borde" href="#publicar">Publicar un textil</a>
+                </div>
+            </div>
+            <ul class="hero__cifras" aria-label="Resumen">
+                <li><strong id="cifra-textiles">0</strong><span>textiles disponibles</span></li>
+                <li><strong id="cifra-comunas">0</strong><span>comunas con publicaciones</span></li>
+                <li><strong id="cifra-solicitudes">0</strong><span>solicitudes en curso</span></li>
+            </ul>
+        </div>
+
+        <div class="pasos">
+            <h2>Cómo funciona</h2>
+            <ol class="pasos__lista">
+                <li><span class="pasos__n">1</span><h3>Publica</h3><p>Indica nombre, tipo, estado y comuna. Toma un minuto.</p></li>
+                <li><span class="pasos__n">2</span><h3>Conecta</h3><p>Quien lo necesita lo encuentra con filtros y presiona «Me interesa».</p></li>
+                <li><span class="pasos__n">3</span><h3>Reutiliza</h3><p>Coordinan la entrega y siguen el estado de la solicitud hasta el final.</p></li>
+            </ol>
+        </div>
+
+        <div class="problema">
+            <div>
+                <h2>¿Por qué EntreTelas?</h2>
+                <p>Hoy la ropa en desuso se acumula en la casa o termina en la basura. Los puntos de acopio quedan lejos, las donaciones por redes sociales se pierden entre publicaciones y nadie sabe en qué estado está la prenda ni qué pasó con ella.</p>
+            </div>
+            <ul class="problema__lista">
+                <li><strong>Información en un solo lugar.</strong> Tipo, comuna y estado a la vista.</li>
+                <li><strong>Menos tiempo buscando.</strong> Filtros por Ropa, Retazos y Para reparar.</li>
+                <li><strong>Seguimiento claro.</strong> Cada solicitud muestra en qué paso va.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Explorar -->
+    <section class="vista" id="vista-explorar" data-vista="explorar" hidden>
+        <div class="encabezado">
+            <h1>Explorar textiles</h1>
+            <p>Filtra por tipo y comuna. Presiona «Me interesa» para pedir un textil.</p>
+        </div>
+        <div class="filtros" role="search">
+            <div class="filtros__chips" role="group" aria-label="Tipo de textil" id="chips"></div>
+            <label class="campo campo--linea">
+                <span>Comuna</span>
+                <select id="filtro-comuna"><option value="">Todas</option></select>
+            </label>
+            <label class="campo campo--linea campo--busqueda">
+                <span>Buscar</span>
+                <input id="filtro-texto" type="search" placeholder="Ej: lana, chaqueta" autocomplete="off">
+            </label>
+        </div>
+        <p class="resultado" id="resultado" aria-live="polite"></p>
+        <ul class="catalogo" id="catalogo"></ul>
+    </section>
+
+    <!-- Publicar -->
+    <section class="vista" id="vista-publicar" data-vista="publicar" hidden>
+        <div class="encabezado">
+            <h1>Publicar un textil</h1>
+            <p>Completa los datos básicos. Tu publicación aparece de inmediato en Explorar.</p>
+        </div>
+        <form class="formulario" id="form-publicar" novalidate>
+            <label class="campo">
+                <span>Nombre del textil</span>
+                <input name="nombre" maxlength="60" placeholder="Ej: Chaqueta de mezclilla talla M" required>
+                <small class="campo__error" data-error="nombre"></small>
+            </label>
+            <fieldset class="campo">
+                <legend>Tipo</legend>
+                <div class="opciones" id="opciones-tipo"></div>
+                <small class="campo__error" data-error="tipo"></small>
+            </fieldset>
+            <div class="formulario__fila">
+                <label class="campo">
+                    <span>Estado</span>
+                    <select name="estado" id="sel-estado" required><option value="">Elige…</option></select>
+                    <small class="campo__error" data-error="estado"></small>
+                </label>
+                <label class="campo">
+                    <span>Comuna</span>
+                    <select name="comuna" id="sel-comuna" required><option value="">Elige…</option></select>
+                    <small class="campo__error" data-error="comuna"></small>
+                </label>
+            </div>
+            <label class="campo">
+                <span>Detalle <em>(opcional)</em></span>
+                <textarea name="detalle" rows="3" maxlength="240" placeholder="Talla, medidas, qué hay que reparar…"></textarea>
+                <small class="campo__error" data-error="detalle"></small>
+            </label>
+            <button class="et-boton" type="submit">Publicar</button>
+        </form>
+    </section>
+
+    <!-- Seguimiento -->
+    <section class="vista" id="vista-seguimiento" data-vista="seguimiento" hidden>
+        <div class="encabezado">
+            <h1>Seguimiento de solicitudes</h1>
+            <p>Cada textil que pediste, y en qué paso va el intercambio.</p>
+        </div>
+        <ul class="solicitudes" id="solicitudes"></ul>
+    </section>
+</main>
+
+<footer class="et-footer">
+    <p><strong>EntreTelas</strong> · Taller de Innovación y Emprendimiento · Prototipo con datos de ejemplo guardados en este navegador.</p>
+    <button class="et-enlace" type="button" id="reiniciar">Reiniciar datos de ejemplo</button>
+</footer>
+
+<div class="aviso" id="aviso" role="status" aria-live="polite" hidden></div>
+
+<script src="js/store.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
